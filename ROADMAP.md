@@ -1,6 +1,6 @@
 # Core features
 
-- [ ] Determine current day by reading FS
+- [x] Determine current day by reading FS
 - [ ] Parse DSA config json
 - [ ] Generate file for given DSA config
 - [ ] Write tests for every exercise
