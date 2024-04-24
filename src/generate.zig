@@ -4,25 +4,29 @@ const tmp_dir = testing.tmpDir;
 const expect = testing.expect;
 
 pub fn generate_katas() !void {
-    const dir = try std.fs.cwd().openDir("src", .{ .iterate = true });
-    const curr_day = try highest_day_folder_in_src(dir);
-
-    std.debug.print("\nDay folders: {}\n", .{curr_day});
-}
-
-fn highest_day_folder_in_src(dir: std.fs.Dir) !i16 {
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     defer arena.deinit();
     const allocator = arena.allocator();
 
-    var walker = try dir.walk(allocator);
+    const dir = try std.fs.cwd().openDir("src", .{ .iterate = true });
+    const curr_day = try highest_day_folder_in_src(dir, &allocator);
+
+    std.debug.print("\nDay folders: {}\n", .{curr_day});
+}
+
+fn highest_day_folder_in_src(dir: std.fs.Dir, allocator: *const std.mem.Allocator) !i16 {
+    var walker = try dir.walk(allocator.*);
     defer walker.deinit();
 
     var max: i16 = 0;
+    // Loop over items in dir
     outer: while (try walker.next()) |item| {
         if (item.kind != std.fs.File.Kind.directory) continue;
         if (item.basename.len != 7) continue;
 
+        // Create mask of directory name by:
+        // - Replacing numeric characters with 'x'
+        // - Replacing uppercase characters with lowercase equivalent
         var mask: [7]u8 = .{undefined} ** 7;
         for (item.basename, 0..) |c, i| {
             mask[i] = switch (c) {
@@ -32,10 +36,12 @@ fn highest_day_folder_in_src(dir: std.fs.Dir) !i16 {
             };
         }
 
+        // Verify masked directory name is "day_xxx"
         for ("day_xxx", 0..) |c, i| {
             if (c != mask[i]) continue :outer;
         }
 
+        // Update max if day number is higher than current max
         const day = try std.fmt.parseInt(i16, item.basename[4..], 10);
         if (max < day) max = day;
     }
@@ -59,7 +65,7 @@ test "highest_day_folder_in_src" {
     try tmp.dir.makeDir("pepes");
     try tmp.dir.makeDir("69__420");
 
-    const result = try highest_day_folder_in_src(tmp.dir);
+    const result = try highest_day_folder_in_src(tmp.dir, &testing.allocator);
 
     try expect(result == 10);
 }
