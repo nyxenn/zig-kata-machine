@@ -47,7 +47,7 @@
     },
     {
       "name": "BubbleSort",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "bubble_sort",
       "arg_names": ["arr"],
       "arg_types": ["Array<number>"],

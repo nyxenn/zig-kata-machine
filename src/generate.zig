@@ -15,8 +15,11 @@ fn generate_katas() !void {
 
     var allocator = gpa.allocator();
 
+    const json = try std.fs.cwd().readFileAlloc(allocator.*, "dsa.json", 25_000);
+    defer allocator.free(json);
+
     var config = cfg.Configuration{};
-    try config.init(&allocator);
+    try config.init(&allocator, json);
     defer config.deinit();
 
     std.debug.print("\n\nParsed json:\n{}\n", .{try config.value()});

@@ -266,7 +266,7 @@
     },
     {
       "name": "BubbleSort",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "bubble_sort",
       "arg_names": ["arr"],
       "arg_types": ["Array<number>"],
@@ -274,7 +274,7 @@
     },
     {
       "name": "InsertionSort",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "insertion_sort",
       "arg_names": ["arr"],
       "arg_types": ["Array<number>"],
@@ -282,7 +282,7 @@
     },
     {
       "name": "MergeSort",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "merge_sort",
       "arg_names": ["arr"],
       "arg_types": ["Array<number>"],
@@ -290,7 +290,7 @@
     },
     {
       "name": "QuickSort",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "quick_sort",
       "arg_names": ["arr"],
       "arg_types": ["Array<number>"],
@@ -298,7 +298,7 @@
     },
     {
       "name": "DijkstraList",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "dijkstra_list",
       "arg_names": ["source", "sink", "arr"],
       "arg_types": ["number", "number", "WeightedAdjacencyList"],
@@ -306,7 +306,7 @@
     },
     {
       "name": "PrimsList",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "prims",
       "arg_names": ["list"],
       "arg_types": ["WeightedAdjacencyList"],
@@ -314,7 +314,7 @@
     },
     {
       "name": "BinarySearchList",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "bs_list",
       "arg_names": ["haystack", "needle"],
       "arg_types": ["Array<number>", "number"],
@@ -322,7 +322,7 @@
     },
     {
       "name": "LinearSearchList",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "linear_search",
       "arg_names": ["haystack", "needle"],
       "arg_types": ["Array<number>", "number"],
@@ -330,7 +330,7 @@
     },
     {
       "name": "TwoCrystalBalls",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "two_crystal_balls",
       "arg_names": ["breaks"],
       "arg_types": ["Array<boolean>"],
@@ -338,7 +338,7 @@
     },
     {
       "name": "MazeSolver",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "solve",
       "arg_names": ["maze", "wall", "start", "end"],
       "arg_types": ["Array<string>", "string", "Point", "Point"],
@@ -346,7 +346,7 @@
     },
     {
       "name": "BTPreOrder",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "pre_order_search",
       "arg_names": ["head"],
       "arg_types": ["BinaryNode<number>"],
@@ -354,7 +354,7 @@
     },
     {
       "name": "BTInOrder",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "in_order_search",
       "arg_names": ["head"],
       "arg_types": ["BinaryNode<number>"],
@@ -362,7 +362,7 @@
     },
     {
       "name": "BTPostOrder",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "post_order_search",
       "arg_names": ["head"],
       "arg_types": ["BinaryNode<number>"],
@@ -370,7 +370,7 @@
     },
     {
       "name": "BTBFS",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "bfs",
       "arg_names": ["head", "needle"],
       "arg_types": ["BinaryNode<number>", "number"],
@@ -378,7 +378,7 @@
     },
     {
       "name": "CompareBinaryTrees",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "compare",
       "arg_names": ["a", "b"],
       "arg_types": ["BinaryNode<number> | null", "BinaryNode<number> | null"],
@@ -386,7 +386,7 @@
     },
     {
       "name": "DFSOnBST",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "dfs",
       "arg_names": ["head", "needle"],
       "arg_types": ["BinaryNode<number>", "number"],
@@ -394,7 +394,7 @@
     },
     {
       "name": "DFSGraphList",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "dfs",
       "arg_names": ["graph", "source", "needle"],
       "arg_types": ["WeightedAdjacencyList", "number", "number"],
@@ -403,7 +403,7 @@
 
     {
       "name": "BFSGraphList",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "bfs",
       "arg_names": ["graph", "source", "needle"],
       "arg_types": ["WeightedAdjacencyList", "number", "number"],
@@ -412,7 +412,7 @@
 
     {
       "name": "BFSGraphMatrix",
-      "type": "fn_name",
+      "type": "fn",
       "fn_name": "bfs",
       "arg_names": ["graph", "source", "needle"],
       "arg_types": ["WeightedAdjacencyMatrix", "number", "number"],

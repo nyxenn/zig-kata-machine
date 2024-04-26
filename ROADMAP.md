@@ -10,3 +10,4 @@
 # Possible extras
 
 - [ ] Timed completion for given day
+- [ ] Tech detail: Compare parsed json structs on sorted array of hashes?
