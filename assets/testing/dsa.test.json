@@ -18,7 +18,7 @@
           "arg_names": ["item"],
           "arg_types": ["Generic<T>"],
           "return_type": "void"
-        },
+        }
       ],
       "predefineds": ["length_property"]
     }
@@ -52,5 +52,6 @@
       "arg_names": ["arr"],
       "arg_types": ["Array<number>"],
       "return_type": "void"
-    },
+    }
+  ]
 }

@@ -22,8 +22,11 @@ pub const Configuration = struct {
     }
 
     pub fn init(self: *Configuration, allocator: *std.mem.Allocator, json: []u8) !void {
+        var dir = try std.fs.cwd().openDir("src", .{ .iterate = true });
+        defer dir.close();
+
         self.json = try self.parse_json(allocator, json);
-        self.day = try self.highest_day_folder_in_src(allocator);
+        self.day = try self.highest_day_folder_in_src(dir, allocator);
 
         self.initialized = true;
     }
@@ -47,11 +50,8 @@ pub const Configuration = struct {
         self.json.deinit();
     }
 
-    fn highest_day_folder_in_src(self: *Configuration, allocator: *const std.mem.Allocator) !u16 {
+    fn highest_day_folder_in_src(self: *Configuration, dir: std.fs.Dir, allocator: *const std.mem.Allocator) !u16 {
         _ = self;
-
-        var dir = try std.fs.cwd().openDir("src", .{ .iterate = true });
-        defer dir.close();
 
         var walker = try dir.walk(allocator.*);
         defer walker.deinit();
@@ -88,7 +88,7 @@ pub const Configuration = struct {
 };
 
 test "highest_day_folder_in_src" {
-    var tmp = std.testing.tmp_dir(.{ .iterate = true });
+    var tmp = std.testing.tmpDir(.{ .iterate = true });
     defer tmp.cleanup();
 
     try tmp.dir.makeDir("day_001");
@@ -103,14 +103,15 @@ test "highest_day_folder_in_src" {
     try tmp.dir.makeDir("pepes");
     try tmp.dir.makeDir("69__420");
 
-    const cfg = Configuration{};
+    var cfg = Configuration{};
     const result = try cfg.highest_day_folder_in_src(tmp.dir, &std.testing.allocator);
 
     try std.testing.expect(result == 10);
 }
 
 test "parse_json" {
-    const json = try std.fs.cwd().readFileAlloc(std.testing.allocator, "assets/testing/dsa.test.json", 1000);
+    const json = try std.fs.cwd().readFileAlloc(std.testing.allocator, "assets/testing/dsa.test.json", 10_000);
+    defer std.testing.allocator.free(json);
 
     const pub_len_prop = JsonProperty{ .name = "length", .type = "number", .scope = "public" };
     var len_predef_props = [_]JsonProperty{pub_len_prop};
@@ -142,30 +143,24 @@ test "parse_json" {
         JsonExercise{ .name = "BubbleSort", .type = "fn", .fn_name = "bubble_sort", .return_type = "void", .arg_names = bubble_arg_names[0..], .arg_types = bubble_arg_types[0..] },
     };
 
-    var expected = JsonConfiguration{
+    const expected = JsonConfiguration{
         .predefineds = predefineds[0..],
         .exercises = exercises[0..],
     };
 
     var cfg = Configuration{};
     var allocator = std.testing.allocator;
+
     try cfg.init(&allocator, json);
     defer cfg.deinit();
 
-    try std.testing.expect(cfg.json.value.equals(&expected));
+    try std.testing.expectEqualDeep(expected, cfg.json.value);
 }
 
 pub const JsonProperty = struct {
     name: []const u8,
     type: []const u8,
     scope: []const u8,
-
-    fn equals(self: *JsonProperty, other: *JsonProperty) bool {
-        if (self.name != other.name or self.type != other.type or self.scope != other.scope)
-            return false;
-
-        return true;
-    }
 };
 
 pub const JsonMethod = struct {
@@ -173,18 +168,6 @@ pub const JsonMethod = struct {
     arg_types: [][]const u8,
     arg_names: [][]const u8,
     return_type: []const u8,
-
-    fn equals(self: *JsonMethod, other: *JsonMethod) bool {
-        if (self.name != other.name or self.return_type != other.return_type) return false;
-
-        if (self.arg_types != null and other.arg_types != null and compare_string_arr(self.arg_types, other.arg_types) == false)
-            return false;
-
-        if (self.arg_names != null and other.arg_names != null and compare_string_arr(self.arg_names, other.arg_names) == false)
-            return false;
-
-        return true;
-    }
 };
 
 pub const JsonPredefined = struct {
@@ -192,21 +175,6 @@ pub const JsonPredefined = struct {
     properties: ?[]JsonProperty = null,
     methods: ?[]JsonMethod = null,
     predefineds: ?[][]const u8 = null,
-
-    fn equals(self: *JsonPredefined, other: *JsonPredefined) bool {
-        if (self.name != other.name) return false;
-
-        if (self.methods != null and other.methods != null and compare_methods(self.methods, other.methods) == false)
-            return false;
-
-        if (self.properties != null and other.properties != null and compare_properties(self.properties, other.properties) == false)
-            return false;
-
-        if (self.predefineds != null and other.predefineds != null and compare_string_arr(self.predefineds, other.predefineds) == false)
-            return false;
-
-        return true;
-    }
 };
 
 // TODO: Might want to clean up the input json... cba tho
@@ -221,176 +189,9 @@ pub const JsonExercise = struct {
     predefineds: ?[][]const u8 = null,
     arg_types: ?[][]const u8 = null,
     arg_names: ?[][]const u8 = null,
-
-    fn equals(self: *JsonExercise, other: *JsonExercise) bool {
-        if (self.name != other.name or self.fn_name != other.fn_name or self.generic != other.generic or self.type != other.type or self.return_type != other.return_type)
-            return false;
-
-        if (self.methods != null and other.methods != null and compare_methods(self.methods, other.methods) == false)
-            return false;
-
-        if (self.properties != null and other.properties != null and compare_properties(self.properties, other.properties) == false)
-            return false;
-
-        if (self.predefineds != null and other.predefineds != null and compare_string_arr(self.predefineds, other.predefineds) == false)
-            return false;
-
-        if (self.arg_types != null and other.arg_types != null and compare_string_arr(self.arg_types, other.arg_types) == false)
-            return false;
-
-        if (self.arg_names != null and other.arg_names != null and compare_string_arr(self.arg_names, other.arg_names) == false)
-            return false;
-
-        return true;
-    }
 };
 
 pub const JsonConfiguration = struct {
     predefineds: []JsonPredefined,
     exercises: []JsonExercise,
-
-    fn equals(self: *JsonConfiguration, other: *JsonConfiguration) bool {
-        if (self.predefineds.len != other.predefineds.len) return false;
-        if (self.exercises.len != other.exercises.len) return false;
-        if (compare_predefineds(self.predefineds, other.predefineds) == false) return false;
-        if (compare_exercises(self.exercises, other.exercises) == false) return false;
-
-        return true;
-    }
 };
-
-// TODO: Would be worthwile to find out how to make a generic function for this...
-// cba for quick win rn
-fn compare_predefineds(a: []const JsonPredefined, b: []const JsonPredefined) bool {
-    var eq = true;
-    var checked = [1]bool{false} ** b.len;
-
-    outer: for (a) |pa| {
-        for (b, 0..) |pb, i| {
-            // Edge case masturbation:
-            // (Commonly referred to as "edging")
-            // We could return false here if a.predefineds was guaranteed
-            // to contain no duplicates, and we do a comparison here that
-            // would try to set an already "true" equality flag in our array
-            // to true. (Signalling that at the very least our b.predefineds has a dupe).
-            // However.. yeah idk
-            // I just do a check afterwards to make sure we found an equal in  _every_ b.predefineds item.
-            // This logic applies to every array comparison in these json models
-            if (pa.equals(pb) == false) {
-                eq = false;
-                break :outer;
-            }
-
-            checked[i] = true;
-        }
-    }
-
-    for (checked) |flag| {
-        if (flag == false) {
-            eq = false;
-            break;
-        }
-    }
-
-    return eq;
-}
-
-fn compare_exercises(a: []const JsonExercise, b: []const JsonExercise) bool {
-    var eq = true;
-    var checked = [1]bool{false} ** b.len;
-
-    outer: for (a) |pa| {
-        for (b, 0..) |pb, i| {
-            if (pa.equals(pb) == false) {
-                eq = false;
-                break :outer;
-            }
-
-            checked[i] = true;
-        }
-    }
-
-    for (checked) |flag| {
-        if (flag == false) {
-            eq = false;
-            break;
-        }
-    }
-
-    return eq;
-}
-
-fn compare_methods(a: []const JsonMethod, b: []const JsonMethod) bool {
-    var eq = true;
-    var checked = [1]bool{false} ** b.len;
-
-    outer: for (a) |pa| {
-        for (b, 0..) |pb, i| {
-            if (pa.equals(pb) == false) {
-                eq = false;
-                break :outer;
-            }
-
-            checked[i] = true;
-        }
-    }
-
-    for (checked) |flag| {
-        if (flag == false) {
-            eq = false;
-            break;
-        }
-    }
-
-    return eq;
-}
-
-fn compare_properties(a: []const JsonProperty, b: []const JsonProperty) bool {
-    var eq = true;
-    var checked = [1]bool{false} ** b.len;
-
-    outer: for (a) |pa| {
-        for (b, 0..) |pb, i| {
-            if (pa.equals(pb) == false) {
-                eq = false;
-                break :outer;
-            }
-
-            checked[i] = true;
-        }
-    }
-
-    for (checked) |flag| {
-        if (flag == false) {
-            eq = false;
-            break;
-        }
-    }
-
-    return eq;
-}
-
-fn compare_string_arr(a: [][]u8, b: [][]u8) bool {
-    var eq = true;
-    var checked = [1]bool{false} ** b.len;
-
-    outer: for (a) |pa| {
-        for (b, 0..) |pb, i| {
-            if (pa != pb) {
-                eq = false;
-                break :outer;
-            }
-
-            checked[i] = true;
-        }
-    }
-
-    for (checked) |flag| {
-        if (flag == false) {
-            eq = false;
-            break;
-        }
-    }
-
-    return eq;
-}
