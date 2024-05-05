@@ -2,6 +2,7 @@
   "predefineds": [
     {
       "name": "length_property",
+      "type": "property",
       "properties": [
         {
           "name": "length",
@@ -12,6 +13,7 @@
     },
     {
       "name": "list_interface",
+      "type": "class",
       "methods": [
         {
           "name": "prepend",
