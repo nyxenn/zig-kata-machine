@@ -1,8 +1,8 @@
 {
   "predefineds": [
     {
-      "name": "length_property",
       "type": "property",
+      "name": "length_property",
       "properties": [
         {
           "name": "length",
@@ -11,14 +11,15 @@
         }
       ]
     },
+
     {
-      "name": "list_interface",
       "type": "class",
+      "name": "list_interface",
       "methods": [
         {
           "name": "prepend",
           "arg_names": ["item"],
-          "arg_types": ["Generic<T>"],
+          "arg_types": ["T"],
           "return_type": "void"
         }
       ],
@@ -28,14 +29,14 @@
 
   "exercises": [
     {
-      "name": "LRU",
-      "generic": "<K, V>",
       "type": "class",
+      "name": "LRU",
+      "generic": "K, V",
       "methods": [
         {
           "name": "get",
           "arg_names": ["key", "value"],
-          "arg_types": ["Generic<K>", "Generic<V>"],
+          "arg_types": ["K", "V"],
           "return_type": "V | undefined"
         }
       ],
@@ -48,8 +49,8 @@
       ]
     },
     {
+      "type": "function",
       "name": "BubbleSort",
-      "type": "fn",
       "fn_name": "bubble_sort",
       "arg_names": ["arr"],
       "arg_types": ["Array<number>"],

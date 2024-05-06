@@ -1,8 +1,8 @@
 {
   "predefineds": [
     {
-      "name": "length_property",
       "type": "property",
+      "name": "length_property",
       "properties": [
         {
           "name": "length",
@@ -13,25 +13,25 @@
     },
 
     {
-      "name": "list_interface",
       "type": "class",
+      "name": "list_interface",
       "methods": [
         {
           "name": "prepend",
           "arg_names": ["item"],
-          "arg_types": ["Generic<T>"],
+          "arg_types": ["T"],
           "return_type": "void"
         },
         {
           "name": "insertAt",
           "arg_names": ["item", "idx"],
-          "arg_types": ["Generic<T>", "number"],
+          "arg_types": ["T", "number"],
           "return_type": "void"
         },
         {
           "name": "append",
           "arg_names": ["item"],
-          "arg_types": ["Generic<T>"],
+          "arg_types": ["T"],
           "return_type": "T | undefined"
         },
         {
@@ -59,20 +59,20 @@
 
   "exercises": [
     {
-      "name": "LRU",
-      "generic": "<K, V>",
       "type": "class",
+      "name": "LRU",
+      "generic": "K, V",
       "methods": [
         {
           "name": "update",
           "arg_names": ["key", "value"],
-          "arg_types": ["Generic<K>", "Generic<V>"],
+          "arg_types": ["K", "V"],
           "return_type": "void"
         },
         {
           "name": "get",
           "arg_names": ["key"],
-          "arg_types": ["Generic<K>"],
+          "arg_types": ["K"],
           "return_type": "V | undefined"
         }
       ],
@@ -85,8 +85,8 @@
       ]
     },
     {
-      "name": "MinHeap",
       "type": "class",
+      "name": "MinHeap",
       "methods": [
         {
           "name": "insert",
@@ -110,26 +110,26 @@
       ]
     },
     {
-      "name": "Map",
-      "generic": "<T, V>",
       "type": "class",
+      "name": "Map",
+      "generic": "T, V",
       "methods": [
         {
           "name": "get",
           "arg_names": ["key"],
-          "arg_types": ["Generic<T>"],
+          "arg_types": ["T"],
           "return_type": "V | undefined"
         },
         {
           "name": "set",
           "arg_names": ["key", "value"],
-          "arg_types": ["Generic<T>", "Generic<V>"],
+          "arg_types": ["T", "V"],
           "return_type": "void"
         },
         {
           "name": "delete",
           "arg_names": ["key"],
-          "arg_types": ["Generic<T>"],
+          "arg_types": ["T"],
           "return_type": "V | undefined"
         },
         {
@@ -141,14 +141,14 @@
       ]
     },
     {
-      "name": "RingBuffer",
-      "generic": "<T>",
       "type": "class",
+      "name": "RingBuffer",
+      "generic": "T",
       "methods": [
         {
           "name": "push",
           "arg_names": ["item"],
-          "arg_types": ["Generic<T>"],
+          "arg_types": ["T"],
           "return_type": "void"
         },
         {
@@ -173,33 +173,33 @@
       ]
     },
     {
+      "type": "class",
       "name": "ArrayList",
-      "type": "class",
-      "generic": "<T>",
+      "generic": "T",
       "predefineds": ["list_interface"]
     },
     {
+      "type": "class",
       "name": "SinglyLinkedList",
-      "generic": "<T>",
-      "type": "class",
+      "generic": "T",
       "predefineds": ["list_interface"]
     },
     {
+      "type": "class",
       "name": "DoublyLinkedList",
-      "generic": "<T>",
-      "type": "class",
+      "generic": "T",
       "predefineds": ["list_interface"]
     },
     {
-      "name": "Queue",
-      "generic": "<T>",
       "type": "class",
+      "name": "Queue",
+      "generic": "T",
       "predefineds": ["length_property"],
       "methods": [
         {
           "name": "enqueue",
           "arg_names": ["item"],
-          "arg_types": ["Generic<T>"],
+          "arg_types": ["T"],
           "return_type": "void"
         },
         {
@@ -217,15 +217,15 @@
       ]
     },
     {
-      "name": "Stack",
-      "generic": "<T>",
       "type": "class",
+      "name": "Stack",
+      "generic": "T",
       "predefineds": ["length_property"],
       "methods": [
         {
           "name": "push",
           "arg_names": ["item"],
-          "arg_types": ["Generic<T>"],
+          "arg_types": ["T"],
           "return_type": "void"
         },
         {
@@ -243,8 +243,8 @@
       ]
     },
     {
-      "name": "Trie",
       "type": "class",
+      "name": "Trie",
       "methods": [
         {
           "name": "insert",
@@ -267,158 +267,237 @@
       ]
     },
     {
+      "type": "method",
       "name": "BubbleSort",
-      "type": "fn",
-      "fn_name": "bubble_sort",
-      "arg_names": ["arr"],
-      "arg_types": ["Array<number>"],
-      "return_type": "void"
+      "methods": [
+        {
+          "name": "bubble_sort",
+          "arg_names": ["arr"],
+          "arg_types": ["Array<number>"],
+          "return_type": "void"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "InsertionSort",
-      "type": "fn",
-      "fn_name": "insertion_sort",
-      "arg_names": ["arr"],
-      "arg_types": ["Array<number>"],
-      "return_type": "void"
+      "methods": [
+        {
+          "name": "insertion_sort",
+          "arg_names": ["arr"],
+          "arg_types": ["Array<number>"],
+          "return_type": "void"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "MergeSort",
-      "type": "fn",
-      "fn_name": "merge_sort",
-      "arg_names": ["arr"],
-      "arg_types": ["Array<number>"],
-      "return_type": "void"
+      "methods": [
+        {
+          "name": "merge_sort",
+          "arg_names": ["arr"],
+          "arg_types": ["Array<number>"],
+          "return_type": "void"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "QuickSort",
-      "type": "fn",
-      "fn_name": "quick_sort",
-      "arg_names": ["arr"],
-      "arg_types": ["Array<number>"],
-      "return_type": "void"
+      "methods": [
+        {
+          "name": "quick_sort",
+          "arg_names": ["arr"],
+          "arg_types": ["Array<number>"],
+          "return_type": "void"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "DijkstraList",
-      "type": "fn",
-      "fn_name": "dijkstra_list",
-      "arg_names": ["source", "sink", "arr"],
-      "arg_types": ["number", "number", "WeightedAdjacencyList"],
-      "return_type": "Array<number>"
+      "methods": [
+        {
+          "name": "dijkstra_list",
+          "arg_names": ["source", "sink", "arr"],
+          "arg_types": ["number", "number", "WeightedAdjacencyList"],
+          "return_type": "Array<number>"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "PrimsList",
-      "type": "fn",
-      "fn_name": "prims",
-      "arg_names": ["list"],
-      "arg_types": ["WeightedAdjacencyList"],
-      "return_type": "WeightedAdjacencyList | null"
+      "methods": [
+        {
+          "name": "prims",
+          "arg_names": ["list"],
+          "arg_types": ["WeightedAdjacencyList"],
+          "return_type": "WeightedAdjacencyList | null"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "BinarySearchList",
-      "type": "fn",
-      "fn_name": "bs_list",
-      "arg_names": ["haystack", "needle"],
-      "arg_types": ["Array<number>", "number"],
-      "return_type": "boolean"
+      "methods": [
+        {
+          "name": "bs_list",
+          "arg_names": ["haystack", "needle"],
+          "arg_types": ["Array<number>", "number"],
+          "return_type": "boolean"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "LinearSearchList",
-      "type": "fn",
-      "fn_name": "linear_search",
-      "arg_names": ["haystack", "needle"],
-      "arg_types": ["Array<number>", "number"],
-      "return_type": "boolean"
+      "methods": [
+        {
+          "name": "linear_search",
+          "arg_names": ["haystack", "needle"],
+          "arg_types": ["Array<number>", "number"],
+          "return_type": "boolean"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "TwoCrystalBalls",
-      "type": "fn",
-      "fn_name": "two_crystal_balls",
-      "arg_names": ["breaks"],
-      "arg_types": ["Array<boolean>"],
-      "return_type": "number"
+      "methods": [
+        {
+          "name": "two_crystal_balls",
+          "arg_names": ["breaks"],
+          "arg_types": ["Array<boolean>"],
+          "return_type": "number"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "MazeSolver",
-      "type": "fn",
-      "fn_name": "solve",
-      "arg_names": ["maze", "wall", "start", "end"],
-      "arg_types": ["Array<string>", "string", "Point", "Point"],
-      "return_type": "Array<Point>"
+      "methods": [
+        {
+          "name": "solve",
+          "arg_names": ["maze", "wall", "start", "end"],
+          "arg_types": ["Array<string>", "string", "Point", "Point"],
+          "return_type": "Array<Point>"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "BTPreOrder",
-      "type": "fn",
-      "fn_name": "pre_order_search",
-      "arg_names": ["head"],
-      "arg_types": ["BinaryNode<number>"],
-      "return_type": "Array<number>"
+      "methods": [
+        {
+          "name": "pre_order_search",
+          "arg_names": ["head"],
+          "arg_types": ["BinaryNode<number>"],
+          "return_type": "Array<number>"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "BTInOrder",
-      "type": "fn",
-      "fn_name": "in_order_search",
-      "arg_names": ["head"],
-      "arg_types": ["BinaryNode<number>"],
-      "return_type": "Array<number>"
+      "methods": [
+        {
+          "name": "in_order_search",
+          "arg_names": ["head"],
+          "arg_types": ["BinaryNode<number>"],
+          "return_type": "Array<number>"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "BTPostOrder",
-      "type": "fn",
-      "fn_name": "post_order_search",
-      "arg_names": ["head"],
-      "arg_types": ["BinaryNode<number>"],
-      "return_type": "Array<number>"
+      "methods": [
+        {
+          "name": "post_order_search",
+          "arg_names": ["head"],
+          "arg_types": ["BinaryNode<number>"],
+          "return_type": "Array<number>"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "BTBFS",
-      "type": "fn",
-      "fn_name": "bfs",
-      "arg_names": ["head", "needle"],
-      "arg_types": ["BinaryNode<number>", "number"],
-      "return_type": "boolean"
+      "methods": [
+        {
+          "name": "bfs",
+          "arg_names": ["head", "needle"],
+          "arg_types": ["BinaryNode<number>", "number"],
+          "return_type": "boolean"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "CompareBinaryTrees",
-      "type": "fn",
-      "fn_name": "compare",
-      "arg_names": ["a", "b"],
-      "arg_types": ["BinaryNode<number> | null", "BinaryNode<number> | null"],
-      "return_type": "boolean"
+      "methods": [
+        {
+          "name": "compare",
+          "arg_names": ["a", "b"],
+          "arg_types": [
+            "BinaryNode<number> | null",
+            "BinaryNode<number> | null"
+          ],
+          "return_type": "boolean"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "DFSOnBST",
-      "type": "fn",
-      "fn_name": "dfs",
-      "arg_names": ["head", "needle"],
-      "arg_types": ["BinaryNode<number>", "number"],
-      "return_type": "boolean"
+      "methods": [
+        {
+          "name": "dfs",
+          "arg_names": ["head", "needle"],
+          "arg_types": ["BinaryNode<number>", "number"],
+          "return_type": "boolean"
+        }
+      ]
     },
     {
+      "type": "method",
       "name": "DFSGraphList",
-      "type": "fn",
-      "fn_name": "dfs",
-      "arg_names": ["graph", "source", "needle"],
-      "arg_types": ["WeightedAdjacencyList", "number", "number"],
-      "return_type": "Array<number> | null"
+      "methods": [
+        {
+          "name": "dfs",
+          "arg_names": ["graph", "source", "needle"],
+          "arg_types": ["WeightedAdjacencyList", "number", "number"],
+          "return_type": "Array<number> | null"
+        }
+      ]
     },
 
     {
+      "type": "method",
       "name": "BFSGraphList",
-      "type": "fn",
-      "fn_name": "bfs",
-      "arg_names": ["graph", "source", "needle"],
-      "arg_types": ["WeightedAdjacencyList", "number", "number"],
-      "return_type": "Array<number> | null"
+      "methods": [
+        {
+          "name": "bfs",
+          "arg_names": ["graph", "source", "needle"],
+          "arg_types": ["WeightedAdjacencyList", "number", "number"],
+          "return_type": "Array<number> | null"
+        }
+      ]
     },
 
     {
+      "type": "method",
       "name": "BFSGraphMatrix",
-      "type": "fn",
-      "fn_name": "bfs",
-      "arg_names": ["graph", "source", "needle"],
-      "arg_types": ["WeightedAdjacencyMatrix", "number", "number"],
-      "return_type": "Array<number> | null"
+      "methods": [
+        {
+          "name": "bfs",
+          "arg_names": ["graph", "source", "needle"],
+          "arg_types": ["WeightedAdjacencyMatrix", "number", "number"],
+          "return_type": "Array<number> | null"
+        }
+      ]
     }
   ]
 }

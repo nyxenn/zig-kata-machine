@@ -19,7 +19,4 @@ fn generate_katas() !void {
     defer config.deinit();
 
     std.debug.print("\n\nParsed json:\n{}\n", .{try config.value()});
-
-    var dir = try std.fs.cwd().openDir("src", .{ .iterate = true });
-    defer dir.close();
 }
